@@ -30,4 +30,7 @@ Route::post('/admin-dashboard', [AdminController::class, 'login']);
 
 //category product
 Route::get('/add-category', [CategoryProductController::class, 'add_category']);
+Route::post('/save-category', [CategoryProductController::class, 'save_category']);
 Route::get('/all-category', [CategoryProductController::class, 'all_category']);
+Route::get('/unactive-category/{id}', [CategoryProductController::class, 'unactive_category']);
+Route::get('/active-category/{id}', [CategoryProductController::class, 'active_category']);
