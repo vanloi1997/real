@@ -3,7 +3,7 @@
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Danh sách danh mục sản phẩm
+      Danh sách sản phẩm
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -42,34 +42,42 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
-            <th>Tên danh mục</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Gía</th>
+            <th>Hình Sản Phẩm</th>
+            <th>Danh Mục</th>
+            <th>Thương Hiệu</th>
             <th>Hiển Thị</th>
             <th>Ngày Thêm</th>
             <th>Thao Tác</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($data as $cate)
+          @foreach($data as $pro)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>{{$cate->name}}</td>
+            <td>{{$pro->name}}</td>
+            <td>{{$pro->price}}</td>
+            <td><img src="uploads/product/{{$pro->image}}" height="100px" width="100px"></td>
+            <td>{{$pro->category_name}}</td>
+            <td>{{$pro->brand_name}}</td>
             <td><span class="text-ellipsis">
             <?php
-              if($cate->status == 0){
+              if($pro->status == 0){
             ?>
-             <a href="{{url('/unactive-category/'.$cate->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
+             <a href="{{url('/unactive-product/'.$pro->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
             <?php 
               }else{
             ?>     
-                <a href="{{url('/active-category/'.$cate->id)}}"><span class="fa-thumb-styling fa fa-thumbs-down"></span></a>
+                <a href="{{url('/active-product/'.$pro->id)}}"><span class="fa-thumb-styling fa fa-thumbs-down"></span></a>
               <?php
               }
             ?>
             </span></td>
-            <td><span class="text-ellipsis">{{$cate->created_at}}</span></td>
+            <td><span class="text-ellipsis">{{$pro->created_at}}</span></td>
             <td>
-              <a href="{{url('/edit-category/'.$cate->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn có chắc là muốn xóa danh mục này không?')" href="{{url('/delete-category/'.$cate->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i</a>
+              <a href="{{url('/edit-product/'.$pro->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
+              <a onclick="return confirm('Bạn có chắc là muốn xóa danh mục này không?')" href="{{url('/delete-product/'.$pro->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i</a>
             </td>
           </tr>
           @endforeach

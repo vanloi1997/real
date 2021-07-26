@@ -45,31 +45,31 @@
             <th>Tên thương hiệu</th>
             <th>Hiển Thị</th>
             <th>Ngày Thêm</th>
-            <th style="width:30px;"></th>
+            <th>Thao Tác</th>
           </tr>
         </thead>
         <tbody>
-          @foreach($data as $cate)
+          @foreach($data as $brand)
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-            <td>{{$cate->name}}</td>
+            <td>{{$brand->name}}</td>
             <td><span class="text-ellipsis">
             <?php
-              if($cate->status == 0){
+              if($brand->status == 0){
             ?>
-             <a href="{{url('/unactive-brand/'.$cate->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
+             <a href="{{url('/unactive-brand/'.$brand->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
             <?php 
               }else{
             ?>     
-                <a href="{{url('/active-brand/'.$cate->id)}}"><span class="fa-thumb-styling fa fa-thumbs-down"></span></a>
+                <a href="{{url('/active-brand/'.$brand->id)}}"><span class="fa-thumb-styling fa fa-thumbs-down"></span></a>
               <?php
               }
             ?>
             </span></td>
-            <td><span class="text-ellipsis">{{$cate->created_at}}</span></td>
+            <td><span class="text-ellipsis">{{$brand->created_at}}</span></td>
             <td>
-              <a href="{{url('/edit-brand/'.$cate->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn có chắc là muốn xóa thương hiệu này không?')" href="{{url('/delete-brand/'.$cate->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i</a>
+              <a href="{{url('/edit-brand/'.$brand->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
+              <a onclick="return confirm('Bạn có chắc là muốn xóa thương hiệu này không?')" href="{{url('/delete-brand/'.$brand->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i</a>
             </td>
           </tr>
           @endforeach

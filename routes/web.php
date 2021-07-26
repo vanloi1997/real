@@ -59,5 +59,5 @@ Route::get('/edit-product/{id}', [ProductController::class, 'edit_product']);
 Route::post('/update-product/{id}', [ProductController::class, 'update_product']);
 Route::get('/delete-product/{id}', [ProductController::class, 'delete_product']);
 Route::get('/all-product', [ProductController::class, 'all_product']);
-Route::get('/unactive-brand/{id}', [BrandController::class, 'unactive_brand']);
-Route::get('/active-brand/{id}', [BrandController::class, 'active_brand']);
+Route::get('/unactive-product/{id}', [ProductController::class, 'unactive_product']);
+Route::get('/active-product/{id}', [ProductController::class, 'active_product']);
