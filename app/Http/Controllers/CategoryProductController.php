@@ -25,6 +25,23 @@ class CategoryProductController extends Controller
         $data = DB::table('category')->get();
         return view('admin.all_category',['data' => $data]);
     }
+    public function edit_category($id){
+        $data = DB::table('category')->where('id',$id)->get();  
+        return view('admin.edit_category',['data' => $data]);
+    }
+    public function update_category(Request $req , $id){
+        $data = array();
+        $data['name'] = $req->category_name;
+        $data['desc'] = $req->category_desc;
+        DB::table('category')->where('id',$id)->update($data);
+        Session::put('message','Sửa danh mục thành công');
+        return Redirect('/all-category');
+    }
+    public function delete_category($id){
+        $data = DB::table('category')->where('id',$id)->delete();  
+        Session::put('message','Xóa danh mục thành công');
+        return Redirect('/all-category');
+    }
     public function unactive_category($id){
         DB::table('category')->where('id',$id)->update(['status' => 1]);
         Session::put('message','Đã ẩn');
