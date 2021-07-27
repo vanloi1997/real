@@ -77,7 +77,7 @@
             <td><span class="text-ellipsis">{{$pro->created_at}}</span></td>
             <td>
               <a href="{{url('/edit-product/'.$pro->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn có chắc là muốn xóa danh mục này không?')" href="{{url('/delete-product/'.$pro->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i</a>
+              <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này không?')" href="{{url('/delete-product/'.$pro->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i</a>
             </td>
           </tr>
           @endforeach

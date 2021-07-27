@@ -20,8 +20,11 @@ use App\Http\Controllers\ProductController;
 //frontend
 Route::get('', [HomeController::class, 'index']);
 
+//danh muc san pham frontend
+Route::get('/category/{id}', [CategoryProductController::class, 'show_category_home']);
 
-
+//thuong hieu san pham
+Route::get('/brand/{id}', [BrandController::class, 'show_brand_home']);
 
 
 //backend

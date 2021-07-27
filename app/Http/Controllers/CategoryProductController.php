@@ -8,7 +8,16 @@ use Session;
 
 class CategoryProductController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect('dashboard');
+        }else{
+            return Redirect('login')->send();
+        }
+    }
     public function add_category(){
+        $this->AuthLogin();
         return view('admin.add_category');
     }
     public function save_category(Request $req){
@@ -22,10 +31,12 @@ class CategoryProductController extends Controller
         return Redirect('/add-category');
     }
     public function all_category(){
+        $this->AuthLogin();
         $data = DB::table('category')->get();
         return view('admin.all_category',['data' => $data]);
     }
     public function edit_category($id){
+        $this->AuthLogin();
         $data = DB::table('category')->where('id',$id)->get();  
         return view('admin.edit_category',['data' => $data]);
     }
@@ -38,6 +49,7 @@ class CategoryProductController extends Controller
         return Redirect('/all-category');
     }
     public function delete_category($id){
+        $this->AuthLogin();
         $data = DB::table('category')->where('id',$id)->delete();  
         Session::put('message','Xóa danh mục thành công');
         return Redirect('/all-category');
@@ -51,5 +63,12 @@ class CategoryProductController extends Controller
         DB::table('category')->where('id',$id)->update(['status' => 0]);
         Session::put('message','Đã hiện');
         return Redirect('/all-category');
+    }
+
+    public function show_category_home($id){
+        $cate  = DB::table('category')->where('status','0')->get();
+        $brand  = DB::table('brand')->where('status','0')->get();
+        $cate_by_id  = DB::table('product')->join('category','product.category_id','=','category.id')->where('category.id',$id)->get();
+        return view('pages.category.home_category',['cate' => $cate, 'brand' => $brand, 'cate_by_id' => $cate_by_id]);
     }
 }

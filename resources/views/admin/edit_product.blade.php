@@ -16,7 +16,7 @@
                             }
                         ?>
                             <div class="position-center">
-                                <form role="form" action="{{url('/update-product')}}" method="post" enctype="multipart/form-data">
+                                <form role="form" action="{{url('/update-product/'.$pro->id)}}" method="post" enctype="multipart/form-data">
                                 {{csrf_field()}}
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên sản phẩm</label>
@@ -42,16 +42,24 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile">Danh mục sản phẩm</label>
                                     <select name="product_category" class="form-control input-sm m-bot15">
-                                        @foreach($data as $cates)
+                                        @foreach($cate as $cates)
+                                            @if($cates->id == $pro->category_id)
+                                            <option selected value="{{$cates->id}}">{{$cates->name}}</option>
+                                            @else
                                             <option value="{{$cates->id}}">{{$cates->name}}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile">Thương hiệu</label>
                                     <select name="product_brand" class="form-control input-sm m-bot15">
-                                        @foreach($data as $brands)
+                                        @foreach($brand as $brands)
+                                            @if($brands->id == $pro->brand_id)
+                                            <option selected value="{{$brands->id}}">{{$brands->name}}</option>
+                                            @else
                                             <option value="{{$brands->id}}">{{$brands->name}}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>

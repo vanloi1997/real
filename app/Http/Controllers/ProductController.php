@@ -8,7 +8,16 @@ use Session;
 
 class ProductController extends Controller
 {
+    public function AuthLogin(){
+        $id = Session::get('id');
+        if($id){
+            return Redirect('dashboard');
+        }else{
+            return Redirect('login')->send();
+        }
+    }
     public function add_product(){
+        $this->AuthLogin();
         $cate = DB::table('category')->orderby('id' , 'desc')->get();
         $brand = DB::table('brand')->orderby('id' , 'desc')->get();
         return view('admin.add_product',['cate' => $cate , 'brand' => $brand]);
@@ -41,6 +50,7 @@ class ProductController extends Controller
         return Redirect('/add-product');
     }
     public function all_product(){
+        $this->AuthLogin();
         $data = DB::table('product')->join('category', 'product.category_id', '=', 'category.id')
         ->join('brand', 'product.brand_id', '=', 'brand.id')
         ->select('product.*', 'category.name as category_name' , 'brand.name as brand_name')
@@ -48,10 +58,13 @@ class ProductController extends Controller
         return view('admin.all_product',['data' => $data]);
     }
     public function edit_product($id){
+        $this->AuthLogin();
         $data = DB::table('product')->where('id',$id)->get();  
-        return view('admin.edit_product',['data' => $data]);
+        $cate = DB::table('category')->get(); 
+        $brand = DB::table('brand')->get();   
+        return view('admin.edit_product',['data' => $data, 'cate' => $cate, 'brand' => $brand]);
     }
-    public function update_brand(Request $req , $id){
+    public function update_product(Request $req , $id){
         $data = array();
         $data['name'] = $req->product_name;
         $data['price'] = $req->product_price;
@@ -60,7 +73,6 @@ class ProductController extends Controller
         $data['category_id'] = $req->product_category;
         $data['brand_id'] = $req->product_brand;
         $data['status'] = $req->product_status;
-        $data['image'] = $req->product_image;
         $get_image = $req->file('product_image');
         
         if($get_image){
@@ -74,14 +86,15 @@ class ProductController extends Controller
             return Redirect('/all-product');
         }
         $data['image'] = '';
-        DB::table('product')->insert($data);
+        DB::table('product')->where('id',$id)->update($data);
         Session::put('message','Sửa sản phẩm thành công');
         return Redirect('/all-product');
     }
-    public function delete_brand($id){
-        $data = DB::table('brand')->where('id',$id)->delete();  
-        Session::put('message','Xóa thương hiệu thành công');
-        return Redirect('/all-brand');
+    public function delete_product($id){
+        $this->AuthLogin();
+        $data = DB::table('product')->where('id',$id)->delete();  
+        Session::put('message','Xóa sản phẩm thành công');
+        return Redirect('/all-product');
     }
     public function unactive_product($id){
         DB::table('product')->where('id',$id)->update(['status' => 1]);
