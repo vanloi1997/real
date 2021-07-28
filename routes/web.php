@@ -70,3 +70,5 @@ Route::get('/active-product/{id}', [ProductController::class, 'active_product'])
 
 //cart
 Route::post('/save-cart', [CartController::class, 'save_cart']);
+Route::get('/show-cart', [CartController::class, 'show_cart']);
+Route::get('/delete-cart/{id}', [CartController::class, 'delete_cart']);
