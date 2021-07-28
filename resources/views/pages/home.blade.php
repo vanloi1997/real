@@ -3,21 +3,15 @@
 <div class="features_items"><!--features_items-->
     <h2 class="title text-center">Sản Phẩm Mới Nhất</h2>
     @foreach($product as $pro)
+    <a href="{{url('/chi-tiet-san-pham/'. $pro->id)}}">
     <div class="col-sm-4">
         <div class="product-image-wrapper">
             <div class="single-products">
                     <div class="productinfo text-center">
                         <img src="{{asset('uploads/product/'.$pro->image)}}" height="230px"/>
                         <h2>{{number_format($pro->price).''.'VND'}}</h2>
-                        <p>{{$pro->name}}</p>
+                        <h4>{{$pro->name}}</h4>
                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
-                    </div>
-                    <div class="product-overlay">
-                        <div class="overlay-content">
-                            <h2>{{number_format($pro->price).''.'VND'}}</h2>
-                            <p>{{$pro->name}}</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
-                        </div>
                     </div>
             </div>
             <div class="choose">
@@ -28,6 +22,7 @@
             </div>
         </div>
     </div>
+    </a>
     @endforeach
 </div><!--features_items-->
 

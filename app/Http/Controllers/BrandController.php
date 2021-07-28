@@ -69,7 +69,8 @@ class BrandController extends Controller
     public function show_brand_home($id){
         $cate  = DB::table('category')->where('status','0')->get();
         $brand  = DB::table('brand')->where('status','0')->get();
-        $brand_by_id  = DB::table('product')->join('brand','product.brand_id','=','brand.id')->where('brand.id',$id)->get();
-        return view('pages.brand.home_brand',['cate' => $cate, 'brand' => $brand, 'brand_by_id' => $brand_by_id]);
+        $brand_by_id  = DB::table('product')->join('brand','product.brand_id','=','brand.id')->where('brand.id',$id)->select('product.*')->get();
+        $brand_name = DB::table('brand')->where('id',$id)->get();
+        return view('pages.brand.home_brand',['cate' => $cate, 'brand' => $brand, 'brand_by_id' => $brand_by_id, 'brand_name' => $brand_name]);
     }
 }

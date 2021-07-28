@@ -106,4 +106,24 @@ class ProductController extends Controller
         Session::put('message','Đã hiện');
         return Redirect('/all-product');
     }
+    public function details_product($id){
+        $cate  = DB::table('category')->where('status','0')->get();
+        $brand  = DB::table('brand')->where('status','0')->get();
+        $data = DB::table('product')->join('category', 'product.category_id', '=', 'category.id')
+        ->join('brand', 'product.brand_id', '=', 'brand.id')
+        ->select('product.*', 'category.name as category_name' , 'brand.name as brand_name')
+        ->where('product.id',$id)
+        ->get();
+        foreach($data as $val){
+            $category = $val->category_id;
+        }
+
+        $related = DB::table('product')->join('category', 'product.category_id', '=', 'category.id')
+        ->join('brand', 'product.brand_id', '=', 'brand.id')
+        ->where('product.category_id',$category)
+        ->whereNotIn('product.id',[$id])
+        ->select('product.*')
+        ->get();
+        return view('pages.product.detail_product',['cate' => $cate, 'brand' => $brand , 'data' => $data ,'related' => $related]);
+    }
 }

@@ -1,23 +1,19 @@
 @extends('layout')
 @section('content')
 <div class="features_items"><!--features_items-->
-    <h2 class="title text-center">Thương Hiệu Sản Phẩm</h2>
-    @foreach($brand_by_id as $brand)
+    @foreach($brand_name as $brand_names)
+    <h2 class="title text-center">{{$brand_names->name}}</h2>
+    @endforeach
+    @foreach($brand_by_id as $brands)
+    <a href="{{url('/chi-tiet-san-pham/'. $brands->id)}}">
     <div class="col-sm-4">
         <div class="product-image-wrapper">
             <div class="single-products">
                     <div class="productinfo text-center">
-                        <img src="{{asset('uploads/product/'.$brand->image)}}" height="230px"/>
-                        <h2>{{number_format($brand->price).''.'VND'}}</h2>
-                        <p>{{$brand->name}}</p>
+                        <img src="{{asset('uploads/product/'.$brands->image)}}" height="230px"/>
+                        <h2>{{number_format($brands->price).''.'VND'}}</h2>
+                        <h4>{{$brands->name}}</h4>
                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
-                    </div>
-                    <div class="product-overlay">
-                        <div class="overlay-content">
-                            <h2>{{number_format($brand->price).''.'VND'}}</h2>
-                            <p>{{$brand->name}}</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
-                        </div>
                     </div>
             </div>
             <div class="choose">
@@ -28,6 +24,7 @@
             </div>
         </div>
     </div>
+    </a>
     @endforeach
 </div><!--features_items-->
 @endsection

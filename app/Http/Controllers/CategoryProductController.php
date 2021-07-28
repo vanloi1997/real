@@ -68,7 +68,8 @@ class CategoryProductController extends Controller
     public function show_category_home($id){
         $cate  = DB::table('category')->where('status','0')->get();
         $brand  = DB::table('brand')->where('status','0')->get();
-        $cate_by_id  = DB::table('product')->join('category','product.category_id','=','category.id')->where('category.id',$id)->get();
-        return view('pages.category.home_category',['cate' => $cate, 'brand' => $brand, 'cate_by_id' => $cate_by_id]);
+        $cate_by_id  = DB::table('product')->join('category','product.category_id','=','category.id')->where('category.id',$id)->select('product.*')->get();
+        $cate_name = DB::table('category')->where('id',$id)->get();
+        return view('pages.category.home_category',['cate' => $cate, 'brand' => $brand, 'cate_by_id' => $cate_by_id, 'cate_name' => $cate_name]);
     }
 }

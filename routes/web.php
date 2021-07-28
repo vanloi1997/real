@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,13 @@ use App\Http\Controllers\ProductController;
 Route::get('', [HomeController::class, 'index']);
 
 //danh muc san pham frontend
-Route::get('/category/{id}', [CategoryProductController::class, 'show_category_home']);
+Route::get('/danh-muc-san-pham/{id}', [CategoryProductController::class, 'show_category_home']);
 
 //thuong hieu san pham
-Route::get('/brand/{id}', [BrandController::class, 'show_brand_home']);
+Route::get('/thuong-hieu-san-pham/{id}', [BrandController::class, 'show_brand_home']);
 
+//chi tiet san pham
+Route::get('/chi-tiet-san-pham/{id}', [ProductController::class, 'details_product']);
 
 //backend
 Route::get('/login', [AdminController::class, 'index']);
@@ -64,3 +67,6 @@ Route::get('/delete-product/{id}', [ProductController::class, 'delete_product'])
 Route::get('/all-product', [ProductController::class, 'all_product']);
 Route::get('/unactive-product/{id}', [ProductController::class, 'unactive_product']);
 Route::get('/active-product/{id}', [ProductController::class, 'active_product']);
+
+//cart
+Route::post('/save-cart', [CartController::class, 'save_cart']);
