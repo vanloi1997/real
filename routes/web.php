@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,57 +19,27 @@ use App\Http\Controllers\CartController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//frontend
-Route::get('', [HomeController::class, 'index']);
+//trang-chu
+Route::get('/', [HomeController::class, 'getIndex']);
+//sản phẩm
+Route::get('/product', [ProductController::class, 'getListProduct']);
 
-//danh muc san pham frontend
-Route::get('/danh-muc-san-pham/{id}', [CategoryProductController::class, 'show_category_home']);
+/*backend --> /admin-page/ */
+Route::get('admin-page/login', [AccountController::class, 'getLoginAdmin']);
+Route::post('admin-page/login', [AccountController::class, 'postLoginAdmin']);
+Route::get('admin-page/logout',[AccountController::class, 'getLogoutAdmin']);
+// ADMIN
+Route::group(['prefix' => 'admin-page', 'middleware' => 'CheckLoginAdmin'], function(){
+    Route::get('', [HomeController::class, 'getAdminPage']);
 
-//thuong hieu san pham
-Route::get('/thuong-hieu-san-pham/{id}', [BrandController::class, 'show_brand_home']);
+    //danh mục
+    Route::group(['prefix' => 'category'], function(){
+        Route::get('list', [CategoryProductController::class, 'getList']);
+        Route::get('add',[CategoryProductController::class, 'getAdd']);
+        Route::post('add/{id}',[CategoryProductController::class, 'postAdd']);
+        Route::get('edit/{id}',[CategoryProductController::class, 'getEdit']);
+        Route::post('edit/{id}',[CategoryProductController::class, 'postEdit']);
+        Route::get('delete/{id}',[CategoryProductController::class, 'getDelete']);
+    });
 
-//chi tiet san pham
-Route::get('/chi-tiet-san-pham/{id}', [ProductController::class, 'details_product']);
-
-//backend
-Route::get('/login', [AdminController::class, 'index']);
-Route::get('/dashboard', [AdminController::class, 'show_dashboard']);
-Route::get('/logout', [AdminController::class, 'logout']);
-Route::post('/admin-dashboard', [AdminController::class, 'login']);
-
-//category product
-Route::get('/add-category', [CategoryProductController::class, 'add_category']);
-Route::post('/save-category', [CategoryProductController::class, 'save_category']);
-Route::get('/edit-category/{id}', [CategoryProductController::class, 'edit_category']);
-Route::post('/update-category/{id}', [CategoryProductController::class, 'update_category']);
-Route::get('/delete-category/{id}', [CategoryProductController::class, 'delete_category']);
-Route::get('/all-category', [CategoryProductController::class, 'all_category']);
-Route::get('/unactive-category/{id}', [CategoryProductController::class, 'unactive_category']);
-Route::get('/active-category/{id}', [CategoryProductController::class, 'active_category']);
-
-
-//brand product
-Route::get('/add-brand', [BrandController::class, 'add_brand']);
-Route::post('/save-brand', [BrandController::class, 'save_brand']);
-Route::get('/edit-brand/{id}', [BrandController::class, 'edit_brand']);
-Route::post('/update-brand/{id}', [BrandController::class, 'update_brand']);
-Route::get('/delete-brand/{id}', [BrandController::class, 'delete_brand']);
-Route::get('/all-brand', [BrandController::class, 'all_brand']);
-Route::get('/unactive-brand/{id}', [BrandController::class, 'unactive_brand']);
-Route::get('/active-brand/{id}', [BrandController::class, 'active_brand']);
-
-
-//product
-Route::get('/add-product', [ProductController::class, 'add_product']);
-Route::post('/save-product', [ProductController::class, 'save_product']);
-Route::get('/edit-product/{id}', [ProductController::class, 'edit_product']);
-Route::post('/update-product/{id}', [ProductController::class, 'update_product']);
-Route::get('/delete-product/{id}', [ProductController::class, 'delete_product']);
-Route::get('/all-product', [ProductController::class, 'all_product']);
-Route::get('/unactive-product/{id}', [ProductController::class, 'unactive_product']);
-Route::get('/active-product/{id}', [ProductController::class, 'active_product']);
-
-//cart
-Route::post('/save-cart', [CartController::class, 'save_cart']);
-Route::get('/show-cart', [CartController::class, 'show_cart']);
-Route::get('/delete-cart/{id}', [CartController::class, 'delete_cart']);
+});

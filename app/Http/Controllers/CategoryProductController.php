@@ -1,75 +1,50 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Category;
 use Illuminate\Http\Request;
 use DB;
 use Session;
 
 class CategoryProductController extends Controller
 {
-    public function AuthLogin(){
-        $id = Session::get('id');
-        if($id){
-            return Redirect('dashboard');
-        }else{
-            return Redirect('login')->send();
-        }
+    public function getList(){
+        $data = Category::all();
+        return view('backend.category.list' , ['data' => $data]);
     }
-    public function add_category(){
-        $this->AuthLogin();
-        return view('admin.add_category');
+    public function getAdd(){
+        return view('backend.category.add_edit');
     }
-    public function save_category(Request $req){
-        $data = array();
-        $data['name'] = $req->category_name;
-        $data['desc'] = $req->category_desc;
-        $data['status'] = $req->category_status;
-
-        DB::table('category')->insert($data);
-        Session::put('message','Thêm danh mục thành công');
-        return Redirect('/add-category');
+    public function postAdd(Request $req){
+        $req->validate([
+            'name_category' => 'required|unique:category,name'
+        ],[
+            'require'       => 'Không được để trống!',
+            'unique'        => 'Tên danh mục đã tồn tại'      
+        ]);
+        $category = new Category();
+        $category->name = $req->name_category;
+        $category->save();
+        return back()->with(['typeMsg'=>'success','msg' => 'Thêm thành công!']);
     }
-    public function all_category(){
-        $this->AuthLogin();
-        $data = DB::table('category')->get();
-        return view('admin.all_category',['data' => $data]);
+    public function getEdit($id){
+        $category = Category::find($id);
+        return view('backend.category.add_edit',['category' => $category]);
     }
-    public function edit_category($id){
-        $this->AuthLogin();
-        $data = DB::table('category')->where('id',$id)->get();  
-        return view('admin.edit_category',['data' => $data]);
+    public function postEdit(Request $req, $id){
+        $req->validate([
+            'name_category'   => 'required|unique:category,name'
+        ],[
+            'require'       => 'Không được để trống!',
+            'unique'        => 'Tên danh mục đã tồn tại'      
+        ]);
+        $category = Category::find($id);
+        $category->name = $req->name_category;
+        $category->save();
+        return back()->with(['typeMsg'=>'success','msg' => 'Sửa thành công!']);
     }
-    public function update_category(Request $req , $id){
-        $data = array();
-        $data['name'] = $req->category_name;
-        $data['desc'] = $req->category_desc;
-        DB::table('category')->where('id',$id)->update($data);
-        Session::put('message','Sửa danh mục thành công');
-        return Redirect('/all-category');
-    }
-    public function delete_category($id){
-        $this->AuthLogin();
-        $data = DB::table('category')->where('id',$id)->delete();  
-        Session::put('message','Xóa danh mục thành công');
-        return Redirect('/all-category');
-    }
-    public function unactive_category($id){
-        DB::table('category')->where('id',$id)->update(['status' => 1]);
-        Session::put('message','Đã ẩn');
-        return Redirect('/all-category');
-    }
-    public function active_category($id){
-        DB::table('category')->where('id',$id)->update(['status' => 0]);
-        Session::put('message','Đã hiện');
-        return Redirect('/all-category');
-    }
-
-    public function show_category_home($id){
-        $cate  = DB::table('category')->where('status','0')->get();
-        $brand  = DB::table('brand')->where('status','0')->get();
-        $cate_by_id  = DB::table('product')->join('category','product.category_id','=','category.id')->where('category.id',$id)->select('product.*')->get();
-        $cate_name = DB::table('category')->where('id',$id)->get();
-        return view('pages.category.home_category',['cate' => $cate, 'brand' => $brand, 'cate_by_id' => $cate_by_id, 'cate_name' => $cate_name]);
+    public function getDelete($id){
+    	Category::destroy($id);
+    	return redirect(url('/admin-page/category/list'))->with(['typeMsg'=>'success','msg'=>'Xóa thành công']);
     }
 }
