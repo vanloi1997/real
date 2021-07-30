@@ -105,8 +105,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Thương hiệu Sản Phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{url('/add-brand')}}">Thêm thương hiệu</a></li>
-						<li><a href="{{url('/all-brand')}}">Danh Sách Thương hiệu</a></li>
+						<li><a href="{{url('/admin-page/brand/add')}}">Thêm thương hiệu</a></li>
+						<li><a href="{{url('/admin-page/brand/list')}}">Danh Sách Thương hiệu</a></li>
                     </ul>
                 </li>
 				<li class="sub-menu">
@@ -115,8 +115,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Sản Phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{url('/add-product')}}">Thêm sản phẩm</a></li>
-						<li><a href="{{url('/all-product')}}">Danh Sách Sản Phẩm</a></li>
+						<li><a href="{{url('/admin-page/product/add')}}">Thêm sản phẩm</a></li>
+						<li><a href="{{url('/admin-page/product/list')}}">Danh Sách Sản Phẩm</a></li>
                     </ul>
                 </li>
             </ul>            </div>

@@ -20,7 +20,7 @@ use App\Http\Controllers\AccountController;
 |
 */
 //trang-chu
-Route::get('/', [HomeController::class, 'getIndex']);
+Route::get('', [HomeController::class, 'getIndex']);
 //sản phẩm
 Route::get('/product', [ProductController::class, 'getListProduct']);
 
@@ -36,10 +36,27 @@ Route::group(['prefix' => 'admin-page', 'middleware' => 'CheckLoginAdmin'], func
     Route::group(['prefix' => 'category'], function(){
         Route::get('list', [CategoryProductController::class, 'getList']);
         Route::get('add',[CategoryProductController::class, 'getAdd']);
-        Route::post('add/{id}',[CategoryProductController::class, 'postAdd']);
+        Route::post('add',[CategoryProductController::class, 'postAdd']);
         Route::get('edit/{id}',[CategoryProductController::class, 'getEdit']);
         Route::post('edit/{id}',[CategoryProductController::class, 'postEdit']);
         Route::get('delete/{id}',[CategoryProductController::class, 'getDelete']);
     });
+    Route::group(['prefix' => 'brand'], function(){
+        Route::get('list', [BrandController::class, 'getList']);
+        Route::get('add',[BrandController::class, 'getAdd']);
+        Route::post('add',[BrandController::class, 'postAdd']);
+        Route::get('edit/{id}',[BrandController::class, 'getEdit']);
+        Route::post('edit/{id}',[BrandController::class, 'postEdit']);
+        Route::get('delete/{id}',[BrandController::class, 'getDelete']);
+    });
+    Route::group(['prefix' => 'product'], function(){
+        Route::get('list', [ProductController::class, 'getList']);
+        Route::get('add',[ProductController::class, 'getAdd']);
+        Route::post('add',[ProductController::class, 'postAdd']);
+        Route::get('edit/{id}',[ProductController::class, 'getEdit']);
+        Route::post('edit/{id}',[ProductController::class, 'postEdit']);
+        Route::get('delete/{id}',[ProductController::class, 'getDelete']);
+    });
+
 
 });

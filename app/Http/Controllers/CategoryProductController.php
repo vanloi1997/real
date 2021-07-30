@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use DB;
-use Session;
+
 
 class CategoryProductController extends Controller
 {
@@ -19,7 +18,7 @@ class CategoryProductController extends Controller
         $req->validate([
             'name_category' => 'required|unique:category,name'
         ],[
-            'require'       => 'Không được để trống!',
+            'required'       => 'Không được để trống!',
             'unique'        => 'Tên danh mục đã tồn tại'      
         ]);
         $category = new Category();
@@ -35,7 +34,7 @@ class CategoryProductController extends Controller
         $req->validate([
             'name_category'   => 'required|unique:category,name'
         ],[
-            'require'       => 'Không được để trống!',
+            'required'       => 'Không được để trống!',
             'unique'        => 'Tên danh mục đã tồn tại'      
         ]);
         $category = Category::find($id);
