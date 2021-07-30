@@ -1,4 +1,4 @@
-@extends('admin_layout')
+@extends('backend.master')
 @section('content')
 <div class="table-agile-info">
   <div class="panel panel-default">
@@ -27,13 +27,6 @@
       </div>
     </div>
     <div class="table-responsive">
-                        <?php
-                            $message = Session::get('message');
-                            if($message){
-                                echo '<span class="text-success">'.$message.'</span>';
-                                Session::put('message',null);
-                            }
-                        ?>
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
@@ -42,13 +35,14 @@
                 <input type="checkbox"><i></i>
               </label>
             </th>
-            <th>Tên Sản Phẩm</th>
-            <th>Gía</th>
-            <th>Hình Sản Phẩm</th>
-            <th>Danh Mục</th>
+            <th>Tên</th>
             <th>Thương Hiệu</th>
-            <th>Hiển Thị</th>
-            <th>Ngày Thêm</th>
+            <th>Hình Sản Phẩm</th>
+            <th>Gía</th>
+            <th>Gía Ưu Đãi</th>
+            <th>Số Lượng Tồn</th>
+            <th>Trạng Thái</th>
+            <th>Lượt Xem</th>
             <th>Thao Tác</th>
           </tr>
         </thead>
