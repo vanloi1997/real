@@ -67,17 +67,18 @@
                 <div class="tab-content">
                     <div class="tab-pane active">
                         <div class="row">
+                            @foreach($product as $data)
                             <div class="col l-2 m-4 s-6">
                                 <div class="product">
-                                    <div class="product__avt" style="background-image: url(./assets/img/product/product1.jpg);">
+                                    <div class="product__avt" style="background-image: url({{asset('uploads/product/'.$data->images[0]->name)}}) ">
                                     </div>
                                     <div class="product__info">
-                                        <h3 class="product__name">Kem dưỡng da NestPlae</h3>
+                                        <h3 class="product__name">{{$data->name}}</h3>
                                         <div class="product__price">
                                             <div class="price__old">
-                                                300.000 đ
+                                            {{$data->price}}
                                             </div>
-                                            <div class="price__new">200.000 <span class="price__unit">đ</span></div>
+                                            <div class="price__new">{{$data->promotion}} <span class="price__unit">đ</span></div>
                                         </div>
                                         <div class="product__sale">
                                             <span class="product__sale-percent">24%%</span>
@@ -88,6 +89,7 @@
                                     <a href="cart.html" class="addToCart">Thêm vào giỏ</a>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="tab-pane">

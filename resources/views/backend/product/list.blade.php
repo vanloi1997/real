@@ -51,24 +51,13 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{$pro->name}}</td>
-            <td>{{$pro->price}}</td>
-            <td><img src="uploads/product/{{$pro->image}}" height="100px" width="100px"></td>
-            <td>{{$pro->category_name}}</td>
             <td>{{$pro->brand_name}}</td>
-            <td><span class="text-ellipsis">
-            <?php
-              if($pro->status == 0){
-            ?>
-             <a href="{{url('/unactive-product/'.$pro->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
-            <?php 
-              }else{
-            ?>     
-                <a href="{{url('/active-product/'.$pro->id)}}"><span class="fa-thumb-styling fa fa-thumbs-down"></span></a>
-              <?php
-              }
-            ?>
-            </span></td>
-            <td><span class="text-ellipsis">{{$pro->created_at}}</span></td>
+            <td><img src="{{asset('uploads/product/'.$pro->images[0]->name)}}" height="100px" width="100px"></td>
+            <td>{{$pro->price}}</td>
+            <td>{{$pro->promotion}}</td>
+            <td>{{$pro->quantity_in_stock}}</td>
+            <td>{{$pro->enabled}}</td>
+            <td>{{$pro->views}}</td>
             <td>
               <a href="{{url('/edit-product/'.$pro->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
               <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này không?')" href="{{url('/delete-product/'.$pro->id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-times text-danger text"></i</a>
